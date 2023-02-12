@@ -8,9 +8,9 @@ window.config = {
     dicomWeb: [
       {
         name: 'Orthanc',
-        wadoUriRoot: 'http://vna.refeyes.com:3335/wado',
-        qidoRoot: 'http://vna.refeyes.com:3335/dicom-web',
-        wadoRoot: 'http://vna.refeyes.com:3335/dicom-web',
+        wadoUriRoot: 'https://orthanc.tarskipp.com/wado',
+        qidoRoot: 'https://orthanc.tarskipp.com/dicom-web',
+        wadoRoot: 'https://orthanc.tarskipp.com/dicom-web',
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
         enableStudyLazyLoad: true,
