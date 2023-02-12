@@ -32,9 +32,9 @@
   "RemoteAccessAllowed": true,
   "SslEnabled": false,
   "SslCertificate": "certificate.pem",
-  "AuthenticationEnabled": false,
+  "AuthenticationEnabled": true,
   "RegisteredUsers": {
-    "test": "test"
+    "juandp77": "85juanio77,.-"
   },
   "DicomModalities": {
     "HOROS" : [ "HOROS", "100.109.130.128", 11112 ],
