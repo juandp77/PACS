@@ -68,8 +68,8 @@ services:
       - db
  
   ohif:
-    # image: ohif/viewer
-    build: https://github.com/OHIF/Viewers.git
+    image: ohif/viewer
+    #build: https://github.com/OHIF/Viewers.git
     volumes:
       # NOTE: Supply the reference to an OHIF config file in a .env file as OHIF_CONFIG.
       # This config file is environment specific as it needs urls/ip addresses including
