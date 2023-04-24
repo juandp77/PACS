@@ -38,8 +38,8 @@
   },
   "DicomModalities": {
     "HOROS" : [ "HOROS", "100.109.130.128", 11112 ],
-    "iMac-de-CONSULTA" : ["iMac-de-CONSULTA.local", "192.168.252.25", 11112],
-    "IPAD" : [ "IPAD", "192.168.10.127", 11112 ]
+    "iMac-de-CONSULTA" : ["iMac-de-CONSULTA.local", "192.168.252.25", 11112 ],
+    "IPAD" : [ "IPAD", "192.168.10.127", 11115 ]
   },
   "DicomModalitiesInDatabase": false,
   "DicomAlwaysAllowEcho": true,
