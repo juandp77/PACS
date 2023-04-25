@@ -73,7 +73,7 @@ services:
     volumes:
       # NOTE: Supply the reference to an OHIF config file in a .env file as OHIF_CONFIG.
       # This config file is environment specific as it needs urls/ip addresses including
-      - "./config/${OHIF_CONFIG:-ohif-remote.js}:/usr/share/nginx/html/app-config.js"
+      - ./config/ohif-remote.js:/usr/share/nginx/html/app-config.js:ro
     ports:
       - "3336:80"
     depends_on:
