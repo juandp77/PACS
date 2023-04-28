@@ -1,54 +1,17 @@
 version: '3.8'
 services:
-
-  db:
-    image: mariadb:10.4
-    environment:
-      MYSQL_DATABASE: "orthanc"
-      MYSQL_USER: "orthanc"
-      MYSQL_PASSWORD: "orthanc"
-      MYSQL_ROOT_PASSWORD: "testing123"
-    restart: unless-stopped
-    command:
-      - "--max_allowed_packet=500M"
-    volumes:
-      - "orthanc-data:/var/lib/mysql"
-    ports:
-      - "3301:3306"
-
   orthanc:
     # image: jodogne/orthanc-plugins:latest
     image: jodogne/orthanc-python
     hostname: orthanc
-    environment:
-      # StoneViewer configurations
-      ORTHANC__STONE_WEB_VIEWER__DATE_FORMAT: "DD/MM/YYYY"
-      # Expected message origin should match the external url. * can be used as an insecure default
-      ORTHANC__STONE_WEB_VIEWER__EXPECTED_MESSAGE_ORIGIN" : "*"
-      # ORTHANC__STONE_WEB_VIEWER__EXPECTED_MESSAGE_ORIGIN" : "http://localhost:8042"
-      ORTHANC__STONE_WEB_VIEWER__DICOM_CACHE_SIZE" : 250
-      ORTHANC__MYSQL__HOST: "db"
-      ORTHANC__MYSQL__PORT: "3301"
-      ORTHANC__MYSQL__DATABASE: "orthanc"
-      ORTHANC__MYSQL__USERNAME: "orthanc"
-      ORTHANC__MYSQL__PASSWORD: "orthanc"
-      ORTHANC__MYSQL__ENABLESSL: "false"
-      ORTHANC__MYSQL__SSLVERIFYSERVERCERTIFICATES: "true"
-      ORTHANC__MYSQL__SSLCACERTIFICATES: ""
-      # The following 2 settings do not appear to be recognised, so are also in the orthanc.json config file
-      ORTHANC__MYSQL__ENABLEINDEX: "true"
-      ORTHANC__MYSQL__ENABLESTORAGE: "true"
     volumes:
       # Config
       - ./config/orthanc.json:/etc/orthanc/orthanc.json:ro
       # Persist data - if not using MySQL
-      # - ./volumes/orthanc-db/:/var/lib/orthanc/db/
+      - ./volumes/orthanc-db/:/var/lib/orthanc/db/
     ports:
       - "8042:8042"
       - "4242:4242" # DICOM
     restart: unless-stopped
     depends_on:
       - db
-
-volumes:
-  orthanc-data:
