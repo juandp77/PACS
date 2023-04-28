@@ -44,8 +44,9 @@ services:
       # Persist data - if not using MySQL
       # - ./volumes/orthanc-db/:/var/lib/orthanc/db/
     ports:
-      - '8042:8042'
-      - '4242:4242' # DICOM
+      - '
+      - "8042:8042"
+      - "4242:4242" # DICOM
     restart: unless-stopped
     depends_on:
       - db
