@@ -13,5 +13,3 @@ services:
       - "8042:8042"
       - "4242:4242" # DICOM
     restart: unless-stopped
-    depends_on:
-      - db
