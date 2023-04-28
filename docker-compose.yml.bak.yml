@@ -1,5 +1,15 @@
 version: '3.8'
 services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 3335:8042
+    depends_on:
+      - orthanc
+      - ohif
+    restart: unless-stopped
 
   db:
     image: mariadb:10.4
@@ -18,9 +28,16 @@ services:
 
   orthanc:
     # image: jodogne/orthanc-plugins:latest
-    image: jodogne/orthanc-python
+    image: osimis/orthanc:latest
     hostname: orthanc
     environment:
+      ORTHANC__NAME: "OpenERSAI"
+      OSIMIS_WEB_VIEWER1_PLUGIN_ENABLED: "true"
+      ORTHANC_WEB_VIEWER_PLUGIN_ENABLED: "true"
+      # you must enable the StoneViewer and the DicomWeb plugins
+      STONE_WEB_VIEWER_PLUGIN_ENABLED: "true"
+      DICOM_WEB_PLUGIN_ENABLED: "true"
+      WSI_PLUGIN_ENABLED: "true"
       # StoneViewer configurations
       ORTHANC__STONE_WEB_VIEWER__DATE_FORMAT: "DD/MM/YYYY"
       # Expected message origin should match the external url. * can be used as an insecure default
@@ -28,7 +45,7 @@ services:
       # ORTHANC__STONE_WEB_VIEWER__EXPECTED_MESSAGE_ORIGIN" : "http://localhost:8042"
       ORTHANC__STONE_WEB_VIEWER__DICOM_CACHE_SIZE" : 250
       ORTHANC__MYSQL__HOST: "db"
-      ORTHANC__MYSQL__PORT: "3301"
+      ORTHANC__MYSQL__PORT: "3306"
       ORTHANC__MYSQL__DATABASE: "orthanc"
       ORTHANC__MYSQL__USERNAME: "orthanc"
       ORTHANC__MYSQL__PASSWORD: "orthanc"
@@ -44,11 +61,25 @@ services:
       # Persist data - if not using MySQL
       # - ./volumes/orthanc-db/:/var/lib/orthanc/db/
     ports:
-      - '8042:8042'
+      - 3337:8042
       - '4242:4242' # DICOM
     restart: unless-stopped
     depends_on:
       - db
+ 
+  ohif:
+    image: ohif/viewer
+    #build: https://github.com/OHIF/Viewers.git
+    volumes:
+      # NOTE: Supply the reference to an OHIF config file in a .env file as OHIF_CONFIG.
+      # This config file is environment specific as it needs urls/ip addresses including
+      - ./config/ohif-local.js:/usr/share/nginx/html/app-config.js:ro
+    ports:
+      - "3336:80"
+    depends_on:
+      - orthanc
+    restart: unless-stopped
+
 
 volumes:
   orthanc-data:
